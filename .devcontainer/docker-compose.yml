@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./geocloud2:/var/www/geocloud2:cached
+    networks:
+      - dev_network
+    command: ["sleep", "infinity"]
+
+  valkey:
+    image: valkey/valkey:8.0-alpine3.21
+    ports:
+      - "6379:6379"
+    networks:
+      - dev_network
+    volumes:
+      - valkey_data:/data
+      - ./valkey.conf:/usr/local/etc/valkey/valkey.conf:ro
+    command: ["valkey-server", "/usr/local/etc/valkey/valkey.conf"]
+
+networks:
+  dev_network:
+    driver: bridge
+
+volumes:
+  valkey_data:

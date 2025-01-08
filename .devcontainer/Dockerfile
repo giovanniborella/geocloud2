@@ -3,17 +3,9 @@ FROM mapcentia/gc2core8:mapserver
 RUN export DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
-# Install npm packages run Grunt
-#RUN	cd /var/www/geocloud2 &&\
-#	npm install &&\
-#	grunt production --force
-
-# Install dashboard
-RUN	mkdir -p /var/www/geocloud2/public/dashboard && mkdir /dashboardtmp && cd /dashboardtmp &&\
-    git clone https://github.com/mapcentia/dashboard.git && cd /dashboardtmp/dashboard &&\
-    npm install && cp ./app/config.js.sample ./app/config.js && cp ./.env.production ./.env &&\
-    npm run build && cp -R ./build/* /var/www/geocloud2/public/dashboard/ &&\
-    rm -R /dashboardtmp
+# Increase the number of rows scanned when getting keys in redis
+ADD fix/redisDriver.php /var/www/geocloud2/app/vendor/phpfastcache/phpfastcache/lib/Phpfastcache/Drivers/Redis/Driver.php
+ADD fix/redisclusterDriver.php /var/www/geocloud2/app/vendor/phpfastcache/phpfastcache/lib/Phpfastcache/Drivers/Rediscluster/Driver.php
 
 # opcache + xdebug
 RUN apt-get update

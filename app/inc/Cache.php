@@ -77,7 +77,7 @@ abstract class Cache
                 1.5,
                 true,
                 NULL,
-                ["verify_peer" => false],
+                NULL,
             );
             $redisConfig = [
                 'itemDetailedDate' => true,

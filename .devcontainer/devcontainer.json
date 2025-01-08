@@ -6,7 +6,7 @@
   "mounts": [
     "source=${localWorkspaceFolder},target=/var/www/geocloud2,type=bind"
   ],
-  "postCreateCommand": "sudo chown 1000 /var/www/geocloud2 && npm install -g grunt-cli && grunt && bash run.sh",
+  "postCreateCommand": "sudo chown 1000 /var/www/geocloud2",
   "customizations": {
     "vscode": {
       "settings": {
@@ -14,7 +14,8 @@
         "php.debug.port": 9003
       },
       "extensions": [
-        "xdebug.php-pack"
+        "xdebug.php-pack",
+        "ms-azuretools.vscode-docker"
       ]
     }
   }
